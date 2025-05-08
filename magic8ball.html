@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Magic 8 Ball</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      text-align: center;
+      margin: 0;
+      padding: 0;
+      background-color: #f0f0f0;
+    }
+
+    #loader {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+
+    .spinner {
+      border: 8px solid #f3f3f3;
+      border-top: 8px solid #3498db;
+      border-radius: 50%;
+      width: 60px;
+      height: 60px;
+      animation: spin 1s linear infinite;
+      margin: auto;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    #game {
+      display: none;
+      padding: 50px 20px;
+    }
+
+    input {
+      padding: 10px;
+      width: 250px;
+      font-size: 16px;
+    }
+
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+      margin-top: 10px;
+      cursor: pointer;
+    }
+
+    #answer {
+      margin-top: 20px;
+      font-size: 24px;
+      font-weight: bold;
+      color: #333;
+    }
+  </style>
+</head>
+<body>
+
+  <div id="loader">
+    <div class="spinner"></div>
+    <p>Loading Magic 8 Ball...</p>
+  </div>
+
+  <div id="game">
+    <h1>Ask the Magic 8 Ball</h1>
+    <input type="text" id="question" placeholder="Ask your question" />
+    <br><br>
+    <button onclick="getAnswer()">Ask</button>
+    <h2 id="answer"></h2>
+    <br><br><button onclick="goHome()" >Back to Home</button>
+
+  </div>
+
+  <script>
+    // Simulate loading delay
+    setTimeout(() => {
+      document.getElementById('loader').style.display = 'none';
+      document.getElementById('game').style.display = 'block';
+    }, 2000); // 2 seconds
+
+    function getAnswer() {
+      const answers = ["Yes", "No", "Maybe", "Possibly"];
+      const randomIndex = Math.floor(Math.random() * answers.length);
+      document.getElementById("answer").textContent = answers[randomIndex];
+    }
+
+    function goHome() {
+     window.location.href = "index.html"; // Make sure this path is correct
+     }
+    
+  </script>
+
+</body>
+</html>

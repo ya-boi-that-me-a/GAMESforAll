@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Maze Game</title>
+  <style>
+    body {
+      background-color: #fff8dc;
+      font-family: sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin: 0;
+    }
+
+    #loader {
+      position: fixed;
+      background-color: white;
+      width: 100vw;
+      height: 100vh;
+      z-index: 10;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      transition: opacity 0.5s ease;
+    }
+
+    #loader.hidden {
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .spinner {
+      border: 6px solid #f3f3f3;
+      border-top: 6px solid #3498db;
+      border-radius: 50%;
+      width: 50px;
+      height: 50px;
+      animation: spin 1s linear infinite;
+      margin-bottom: 10px;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    canvas {
+      border: 2px solid black;
+      margin-top: 20px;
+    }
+
+    #level {
+      font-size: 22px;
+      margin-top: 10px;
+    }
+
+    button {
+      margin-top: 20px;
+      padding: 10px 20px;
+      font-size: 16px;
+      cursor: pointer;
+      border: none;
+      border-radius: 8px;
+      background-color: #4CAF50;
+      color: white;
+    }
+  </style>
+</head>
+<body>
+
+  <div id="loader">
+    <div class="spinner"></div>
+    <p>Loading Reach the End Game...</p>
+  </div>
+
+  <h2 id="level">Level: 1</h2>
+  <canvas id="mazeCanvas" width="400" height="400"></canvas>
+  <button onclick="goHome()">Back to Home</button>
+
+  <script>
+    const canvas = document.getElementById('mazeCanvas');
+    const ctx = canvas.getContext('2d');
+    const cellSize = 40;
+    let level = 1;
+
+    let player = { x: 0, y: 0 };
+    let goal = { x: 9, y: 9 };
+
+    function drawMaze() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      for (let row = 0; row < 10; row++) {
+        for (let col = 0; col < 10; col++) {
+          ctx.strokeStyle = 'black';
+          ctx.strokeRect(col * cellSize, row * cellSize, cellSize, cellSize);
+        }
+      }
+
+      // Draw goal
+      ctx.fillStyle = 'green';
+      ctx.fillRect(goal.x * cellSize + 10, goal.y * cellSize + 10, 20, 20);
+
+      // Draw player
+      ctx.fillStyle = 'blue';
+      ctx.fillRect(player.x * cellSize + 5, player.y * cellSize + 5, 30, 30);
+    }
+
+    function nextLevel() {
+      level++;
+      document.getElementById('level').innerText = 'Level: ' + level;
+      player = { x: 0, y: 0 };
+      goal = {
+        x: Math.min(9, Math.floor(Math.random() * (5 + level))),
+        y: Math.min(9, Math.floor(Math.random() * (5 + level)))
+      };
+      drawMaze();
+    }
+
+    document.addEventListener('keydown', (e) => {
+      const key = e.key.toLowerCase();
+      if (['arrowup', 'w'].includes(key) && player.y > 0) player.y--;
+      else if (['arrowdown', 's'].includes(key) && player.y < 9) player.y++;
+      else if (['arrowleft', 'a'].includes(key) && player.x > 0) player.x--;
+      else if (['arrowright', 'd'].includes(key) && player.x < 9) player.x++;
+
+      drawMaze();
+
+      if (player.x === goal.x && player.y === goal.y) {
+        setTimeout(nextLevel, 100);
+      }
+    });
+
+    function goHome() {
+      window.location.href = 'index.html';
+    }
+
+    // Show loader and fade out
+    window.onload = () => {
+      setTimeout(() => {
+        document.getElementById('loader').classList.add('hidden');
+      }, 1200);
+    };
+
+    drawMaze();
+  </script>
+
+</body>
+</html>

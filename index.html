@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>My Games</title>
+  <style>
+    body {
+      background-color: #e6f7ff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      font-family: sans-serif;
+      margin: 0;
+    }
+
+    .game-list {
+      display: none; /* initially hidden */
+      flex-direction: row;
+      gap: 30px;
+    }
+
+    .game-icon {
+      text-align: center;
+      padding: 20px;
+      border: 2px solid #aaa;
+      border-radius: 12px;
+      background-color: white;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .game-icon:hover {
+      background-color: #cceeff;
+    }
+
+    .game-icon img {
+      width: 100px;
+      height: 100px;
+    }
+
+    .game-icon p {
+      font-size: 18px;
+      margin-top: 10px;
+    }
+
+    #loader {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      text-align: center;
+    }
+
+    .spinner {
+      border: 6px solid #f3f3f3;
+      border-top: 6px solid #3498db;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      animation: spin 1s linear infinite;
+      margin: auto;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+  </style>
+</head>
+<body>
+
+  <div id="loader">
+    <div class="spinner"></div>
+    <p>Loading Games...</p>
+  </div>
+
+  <div class="game-list" id="gameList">
+    <!-- Magic 8-Ball Game -->
+    <div class="game-icon" onclick="loadGame('magic8ball.html')">
+      <img src="https://imgs.search.brave.com/2S7ShIYcEmp7pot-7_sFxJ8rCxJEU930J-Y2D_O7JCM/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly90NC5m/dGNkbi5uZXQvanBn/LzAxLzkzLzQ4LzMz/LzM2MF9GXzE5MzQ4/MzM4N19aU1hwM3E2/U2dVV2xpbnYwUGx3/UmE4VmVRYjRTYkRr/MC5qcGc" alt="Magic 8 Ball">
+      <p>Magic 8-Ball</p>
+    </div>
+
+    <!-- Maze Game -->
+    <div class="game-icon" onclick="loadGame('maze.html')">
+      <img src="https://imgs.search.brave.com/QmLyYxb7tMY9FhZbDFvzi2s6v9bU0jHd649K7SETKgo/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9jZG4u/dmVjdG9yc3RvY2su/Y29tL2kvcHJldmll/dy0xeC84MC8yNS9t/YXplLXZlY3Rvci02/OTc4MDI1LmpwZw" alt="Maze Game">
+      <p>Reach the end</p>
+    </div>
+  </div>
+
+  <script>
+    // Show loader initially, then show game list
+    window.onload = () => {
+      setTimeout(() => {
+        document.getElementById('loader').style.display = 'none';
+        document.getElementById('gameList').style.display = 'flex';
+      }, 1200);
+    };
+
+    function loadGame(url) {
+      window.location.href = url;
+    }
+  </script>
+
+</body>
+</html>
